@@ -1,0 +1,100 @@
+services:
+
+  # ========================================================
+  # Frontend
+  # ========================================================
+
+  frontend:
+
+    build:
+      context: ./frontend
+
+    container_name: login_frontend
+
+    networks:
+      - login_network
+
+
+  # ========================================================
+  # Backend
+  # ========================================================
+
+  backend:
+
+    build:
+      context: ./backend
+
+    container_name: login_backend
+
+    env_file:
+      - .env
+
+    depends_on:
+      - postgres
+
+    networks:
+      - login_network
+
+
+  # ========================================================
+  # PostgreSQL
+  # ========================================================
+
+  postgres:
+
+    image: postgres:16-alpine
+
+    container_name: login_postgres
+
+    env_file:
+      - .env
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+    networks:
+      - login_network
+
+
+  # ========================================================
+  # NGINX
+  # ========================================================
+
+  nginx:
+
+    build:
+      context: ./nginx
+
+    container_name: login_nginx
+
+    ports:
+      - "8080:80"
+
+    depends_on:
+      - frontend
+      - backend
+
+    networks:
+      - login_network
+
+
+# ============================================================
+# Network
+# ============================================================
+
+networks:
+
+  login_network:
+
+    driver: bridge
+
+
+# ============================================================
+# Persistent Database Volume
+# ============================================================
+
+volumes:
+
+  postgres_data:
