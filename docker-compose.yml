@@ -5,12 +5,8 @@ services:
   # ========================================================
 
   frontend:
-
-    build:
-      context: ./frontend
-
+    image: jashwanth0310/login-frontend:latest
     container_name: login_frontend
-
     networks:
       - login_network
 
@@ -20,18 +16,12 @@ services:
   # ========================================================
 
   backend:
-
-    build:
-      context: ./backend
-
+    image: jashwanth0310/login-backend:latest
     container_name: login_backend
-
     env_file:
       - .env
-
     depends_on:
       - postgres
-
     networks:
       - login_network
 
@@ -41,19 +31,13 @@ services:
   # ========================================================
 
   postgres:
-
     image: postgres:16-alpine
-
     container_name: login_postgres
-
     env_file:
       - .env
-
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
-
     networks:
       - login_network
 
@@ -63,19 +47,13 @@ services:
   # ========================================================
 
   nginx:
-
-    build:
-      context: ./nginx
-
+    image: jashwanth0310/login-nginx:latest
     container_name: login_nginx
-
     ports:
       - "8080:80"
-
     depends_on:
       - frontend
       - backend
-
     networks:
       - login_network
 
@@ -85,9 +63,7 @@ services:
 # ============================================================
 
 networks:
-
   login_network:
-
     driver: bridge
 
 
@@ -96,5 +72,4 @@ networks:
 # ============================================================
 
 volumes:
-
   postgres_data:
