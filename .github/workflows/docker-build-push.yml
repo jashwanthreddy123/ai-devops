@@ -1,0 +1,51 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Backend
+        run: |
+          docker build \
+            -t jashwanth0310/login-backend:latest \
+            ./backend
+
+      - name: Build Frontend
+        run: |
+          docker build \
+            -t jashwanth0310/login-frontend:latest \
+            ./frontend
+
+      - name: Build NGINX
+        run: |
+          docker build \
+            -t jashwanth0310/login-nginx:latest \
+            ./nginx
+
+      - name: Push Backend
+        run: |
+          docker push jashwanth0310/login-backend:latest
+
+      - name: Push Frontend
+        run: |
+          docker push jashwanth0310/login-frontend:latest
+
+      - name: Push NGINX
+        run: |
+          docker push jashwanth0310/login-nginx:latest
