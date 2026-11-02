@@ -1,4 +1,3 @@
-```yaml
 name: Build and Push Docker Images
 
 on:
@@ -39,16 +38,13 @@ jobs:
             ./project-files/nginx
 
       - name: Push Backend
-        run: |
-          docker push jashwanth0310/login-backend:latest
+        run: docker push jashwanth0310/login-backend:latest
 
       - name: Push Frontend
-        run: |
-          docker push jashwanth0310/login-frontend:latest
+        run: docker push jashwanth0310/login-frontend:latest
 
       - name: Push NGINX
-        run: |
-          docker push jashwanth0310/login-nginx:latest
+        run: docker push jashwanth0310/login-nginx:latest
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.2.0
@@ -61,4 +57,3 @@ jobs:
             docker compose pull
             docker compose up -d
             docker compose ps
-```
