@@ -426,7 +426,7 @@ The objective is to build a practical AI-powered DevOps assistant that helps eng
 ### 1. Clone the Repository
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+git clone https://github.com/jashwanthreddy123/ai-devops.git
 cd ai-devops
 
 
