@@ -1,3 +1,4 @@
+```yaml
 name: Build and Push Docker Images
 
 on:
@@ -10,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -24,19 +24,19 @@ jobs:
         run: |
           docker build \
             -t jashwanth0310/login-backend:latest \
-            ./backend
+            ./project-files/backend
 
       - name: Build Frontend
         run: |
           docker build \
             -t jashwanth0310/login-frontend:latest \
-            ./frontend
+            ./project-files/frontend
 
       - name: Build NGINX
         run: |
           docker build \
             -t jashwanth0310/login-nginx:latest \
-            ./nginx
+            ./project-files/nginx
 
       - name: Push Backend
         run: |
@@ -57,7 +57,8 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd /opt/ai-devops
+            cd /opt/ai-devops/project-files
             docker compose pull
             docker compose up -d
             docker compose ps
+```
