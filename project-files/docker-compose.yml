@@ -64,6 +64,8 @@ services:
 
 networks:
   login_network:
+    name: login_network
+
     driver: bridge
 
 

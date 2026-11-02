@@ -10,3 +10,11 @@ venv/
 .vscode/
 
 *.log
+
+# Local backup files - do not publish
+/agent-app-before-cleanup.tar.gz
+/compose-backup/
+/rca-backup-*/
+/monitoring/*.backup-*
+/monitoring/*.before-*
+/monitoring/*.backup-dashboard-*
